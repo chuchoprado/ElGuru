@@ -57,6 +57,8 @@ def clean_text(text: str) -> str:
 
     # Referencias de fuente OpenAI
     text = re.sub(r'\【[\d:]+†source\】', '', text)
+    text = re.sub(r'</?response>', '', text, flags=re.IGNORECASE)
+
 
     # Símbolos de formato / listas / viñetas
     text = re.sub(r'[*_~`>#•\-]+', ' ', text)
