@@ -93,7 +93,7 @@ class CoachBot:
         self.telegram_app = Application.builder().token(self.TELEGRAM_TOKEN).build()
         self.task_queue = asyncio.Queue()
 
-        self.db_path = os.getenv("DB_PATH", "bot_data.db")
+        self.db_path = os.getenv("DB_PATH", "/var/data/bot_data.db")
         # ——— si Render no puede abrir/crear la base, usa /tmp o memoria ———
                  # ─── Fallback: si la ruta no se puede usar, cambia a /tmp o memoria ───
         try:
