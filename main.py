@@ -93,22 +93,22 @@ class CoachBot:
 
         self.db_path = os.getenv("DB_PATH", "bot_data.db")
         # ——— si Render no puede abrir/crear la base, usa /tmp o memoria ———
-try:
-    # crea la carpeta si existe un directorio en el path
-    db_dir = os.path.dirname(self.db_path)
-    if db_dir and not os.path.exists(db_dir):
-        os.makedirs(db_dir, exist_ok=True)
-    # prueba apertura temprana
-    sqlite3.connect(self.db_path).close()
-except Exception as e:
-    logger.warning(f"No se pudo usar {self.db_path} ({e}); "
-                   "cambio a /tmp/bot_data.db")
-    self.db_path = "/tmp/bot_data.db"
-    try:
-        sqlite3.connect(self.db_path).close()
-    except Exception:
-        logger.warning("Tampoco /tmp funciona — usaré base en memoria (no persiste)")
-        self.db_path = ":memory:"
+                 # ─── Fallback: si la ruta no se puede usar, cambia a /tmp o memoria ───
+        try:
+            db_dir = os.path.dirname(self.db_path)
+            if db_dir and not os.path.exists(db_dir):
+                os.makedirs(db_dir, exist_ok=True)
+            # prueba abrir/cerrar para verificar permisos
+            sqlite3.connect(self.db_path).close()
+        except Exception as e:
+            logger.warning(f"No se pudo usar {self.db_path} ({e}); cambio a /tmp/bot_data.db")
+            self.db_path = "/tmp/bot_data.db"
+            try:
+                sqlite3.connect(self.db_path).close()
+            except Exception:
+                logger.warning("Tampoco /tmp funciona — usaré base en memoria (no persiste)")
+                self.db_path = ":memory:"
+
 
         logger.info(f"📂 Base de datos en → {os.path.abspath(self.db_path)}")
 
