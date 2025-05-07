@@ -193,9 +193,13 @@ class CoachBot:
 
     def _load_user_threads(self):
         with closing(sqlite3.connect(self.db_path)) as conn:
-            cur = conn.cursor()
-            for cid, tid in cur.execute("SELECT chat_id, thread_id FROM user_threads"):
-                self.user_threads[cid] = tid
+        # especificamos las columnas; created_at usa su valor por defecto
+         conn.execute(
+        "INSERT OR REPLACE INTO user_threads (chat_id, thread_id) VALUES (?, ?)",
+        (chat_id, tid)
+        )
+        conn.commit()
+
 
     # ───────────── HANDLERS ─────────────
     def setup_handlers(self):
