@@ -406,8 +406,8 @@ class CoachBot:
     # ──────────── COMANDOS ─────────────
     async def start_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
-            "👋 ¡Hola! Soy tu Coach MeditaHub.\n"
-            "Envíame texto o nota de voz.\n"
+            "👋 ¡Hola! Soy El Guru de MeditaHub y tengo la sabiduría de la historia y sus maximos representantes a tu servicio.\n"
+            " puedes hacerme cualquier consulta. Envíame texto o nota de voz.\n"
             "Comandos: /voice, /reset, /help"
         )
 
