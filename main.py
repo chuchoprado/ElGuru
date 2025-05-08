@@ -330,7 +330,7 @@ class CoachBot:
             -   conn.execute(
             -       "INSERT OR REPLACE INTO user_threads VALUES (?,?)",
             -       (chat_id, tid)
-            -   )
+               )
             +   conn.execute(
             +       "INSERT OR REPLACE INTO user_threads (chat_id, thread_id) VALUES (?,?)",
             +       (chat_id, tid)
