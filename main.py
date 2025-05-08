@@ -327,15 +327,11 @@ class CoachBot:
         tid = thread.id
         self.user_threads[chat_id] = tid
         with closing(sqlite3.connect(self.db_path)) as conn:
-            -   conn.execute(
-            -       "INSERT OR REPLACE INTO user_threads VALUES (?,?)",
-            -       (chat_id, tid)
-               )
-            +   conn.execute(
-            +       "INSERT OR REPLACE INTO user_threads (chat_id, thread_id) VALUES (?,?)",
-            +       (chat_id, tid)
-            )
-                conn.commit()
+           conn.execute(
+              "INSERT OR REPLACE INTO user_threads (chat_id, thread_id) VALUES (?,?)",
+              (chat_id, tid)
+          )
+          conn.commit()
 
     # ──────────── RESPUESTA AL USUARIO ────────────
     async def send_response(self, update: Update, cid: int, text: str):
